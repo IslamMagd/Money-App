@@ -1,5 +1,6 @@
-package com.example.moneyapp.ui.screens.signIn_signUp
+package com.example.moneyapp.ui.screens.signIn
 
+import android.content.Intent
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -33,9 +34,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.example.moneyapp.MainActivity
 import com.example.moneyapp.R
-import com.example.moneyapp.routes.Route.SIGNIN
-import com.example.moneyapp.routes.Route.SIGNUP2
+import com.example.moneyapp.navigation.Route.SIGNUP
 import com.example.moneyapp.ui.theme.Dark_pink
 import com.example.moneyapp.ui.theme.Dark_red_bg
 import com.example.moneyapp.ui.theme.Light_pink
@@ -44,10 +45,10 @@ import com.example.moneyapp.ui.commonUi.textFields.CustomTextField
 
 
 @Composable
-fun SignUpScreen(navController: NavController) {
-    var fullName by remember { mutableStateOf("") }
+fun SignInScreen(navController: NavController) {
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
+    val context = navController.context
 
     Box(
         modifier = Modifier
@@ -55,7 +56,8 @@ fun SignUpScreen(navController: NavController) {
             .background(
                 brush = Brush.verticalGradient(
                     colors = listOf(
-                        Color(Light_pink.value), Color(Dark_pink.value)
+                        Color(Light_pink.value), // Start color
+                        Color(Dark_pink.value)  // End color
                     )
                 )
             )
@@ -64,25 +66,21 @@ fun SignUpScreen(navController: NavController) {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(16.dp),
-            horizontalAlignment = Alignment.CenterHorizontally
+                .padding(16.dp)
         ) {
             Spacer(modifier = Modifier.height(32.dp))
+            Column(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalAlignment = Alignment.CenterHorizontally
 
-            Text(stringResource(R.string.sign_up), fontSize = 24.sp)
+            ) {
+                Text(stringResource(id = R.string.Sign_in), fontSize = 24.sp)
+                Spacer(modifier = Modifier.height(64.dp))
+                Text(stringResource(id = R.string.speedo_transfer), fontSize = 24.sp, fontWeight = FontWeight.Bold)
+            }
+
             Spacer(modifier = Modifier.height(64.dp))
-            Text(stringResource(R.string.speedo_transfer), fontSize = 24.sp, fontWeight = FontWeight.Bold)
 
-
-            Spacer(modifier = Modifier.height(64.dp))
-            CustomTextField(
-                text = stringResource(R.string.full_name),
-                message = stringResource(R.string.enter_your_full_name),
-                value = fullName,
-                onValueChange = { fullName = it },
-                imageRes = painterResource(id = R.drawable.ic_user),
-                trailingIconOn = true
-            )
             CustomTextField(
                 text = stringResource(R.string.email),
                 message = stringResource(R.string.enter_your_email_address),
@@ -91,6 +89,8 @@ fun SignUpScreen(navController: NavController) {
                 imageRes = painterResource(id = R.drawable.ic_email),
                 trailingIconOn = true
             )
+
+
             CustomTextField(text = stringResource(R.string.password),
                 message = stringResource(R.string.enter_your_password),
                 value = password,
@@ -100,8 +100,12 @@ fun SignUpScreen(navController: NavController) {
             Spacer(modifier = Modifier.height(24.dp))
 
             ClickedButton(
-                onClick = {  navController.navigate(SIGNUP2) },
-                textId = R.string.Sign_up,
+                onClick = {
+                    val context = navController.context
+                    val intent = Intent(context, MainActivity::class.java)
+                    context.startActivity(intent)
+                },
+                textId = R.string.Sign_in,
                 modifier = Modifier.padding(20.dp)
             )
 
@@ -112,13 +116,11 @@ fun SignUpScreen(navController: NavController) {
                 horizontalArrangement = Arrangement.Center,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Text(stringResource(R.string.already_have_an_account), fontSize = 16.sp, color = Gray)
-
+                Text(stringResource(R.string.don_t_have_an_account), fontSize = 16.sp, color = Gray)
                 Spacer(modifier = Modifier.width(4.dp))
-
                 ClickableText(
-                    text = AnnotatedString(stringResource(R.string.sign_in)),
-                    onClick = {  navController.navigate(SIGNIN) },
+                    text = AnnotatedString(stringResource(R.string.sign_up)),
+                    onClick = { navController.navigate(SIGNUP) },
                     style = androidx.compose.ui.text.TextStyle(
                         color = Color(Dark_red_bg.value),
                         textDecoration = TextDecoration.Underline,
@@ -134,6 +136,6 @@ fun SignUpScreen(navController: NavController) {
 
 @Preview(showBackground = true)
 @Composable
-fun SignUpScreenPreview() {
-    SignUpScreen(navController = NavController(LocalContext.current))
+fun SignInScreenPreview() {
+    SignInScreen(navController = NavController(LocalContext.current))
 }

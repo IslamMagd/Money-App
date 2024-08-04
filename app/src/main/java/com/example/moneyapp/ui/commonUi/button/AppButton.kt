@@ -14,7 +14,7 @@ fun ClickedButton(
     @StringRes textId: Int,
     modifier: Modifier,
 ){
-    CustomButton(onClick = { onClick }, containerColor =RedP300 , textId = textId , textStyle = interGrayG0medium16 )
+    CustomButton(onClick = { onClick() }, containerColor =RedP300 , textId = textId , textStyle = interGrayG0medium16 )
 }
 
 

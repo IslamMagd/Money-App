@@ -55,3 +55,4 @@ val YelloS400 = Color(0xFF9f7815)
 val YelloS500 = Color(0xFF8a6912)
 
 val DangerD300 = Color(0xFFFF002E)
+val CheckBackground = Color(0xFFC36565)

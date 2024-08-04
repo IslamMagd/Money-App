@@ -1,4 +1,4 @@
-package com.example.moneyapp.ui.screens.signIn_signUp
+package com.example.moneyapp.ui.screens.signUp
 
 import android.annotation.SuppressLint
 import android.content.Intent

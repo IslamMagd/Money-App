@@ -1,9 +1,5 @@
 package com.example.moneyapp.ui.screens
 
-import android.annotation.SuppressLint
-import android.os.Bundle
-import androidx.activity.ComponentActivity
-import androidx.activity.compose.setContent
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -18,8 +14,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.moneyapp.R
-import com.example.moneyapp.routes.Route.HOME
-import com.example.moneyapp.ui.theme.MoneyAppTheme
+import com.example.moneyapp.navigation.Route.HOME
 import com.example.moneyapp.ui.theme.RedP300
 import kotlinx.coroutines.delay
 
