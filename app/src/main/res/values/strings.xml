@@ -61,4 +61,12 @@
     <string name="create_account_confirmation_payment">" Create account, Confirmation, Payment."</string>
     <string name="simple">" Simple."</string>
 
+    <string name="transfer">Transfer</string>
+    <string name="cards">Cards</string>
+    <string name="account">Account</string>
+    <string name="more">More</string>
+    <string name="transfer_was_successful">Your transfer was successful</string>
+    <string name="back_to_home">Back to Home</string>
+    <string name="add_to_favorite">Add to favorite</string>
+
 </resources>

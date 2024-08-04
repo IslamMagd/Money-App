@@ -32,6 +32,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Color.Companion.Green
 import androidx.compose.ui.graphics.Color.Companion.Red
@@ -46,20 +47,30 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.moneyapp.R
-import com.example.moneyapp.routes.Route.TRANSACTION_DETAILS
+import com.example.moneyapp.navigation.Route.TRANSACTION_DETAILS
 import com.example.moneyapp.ui.theme.RedP300
 import com.example.moneyapp.ui.commonUi.CustomHeader
+import com.example.moneyapp.ui.theme.Dark_pink
+import com.example.moneyapp.ui.theme.Light_pink
 
 @Composable
 fun TransactionsScreen(navController: NavController, modifier: Modifier = Modifier) {
     Column(
         modifier = modifier
             .fillMaxSize()
+            .background(
+                brush = Brush.verticalGradient(
+                    colors = listOf(
+                        Color(Light_pink.value), // Start color
+                        Color(Dark_pink.value)  // End color
+                    )
+                )
+            )
         //.padding(16.dp)
 
 
     ) {
-        CustomHeader(title = stringResource(R.string.transaction)) {
+        CustomHeader(title = R.string.transaction) {
             navController.popBackStack()
         }
         Text(
@@ -255,7 +266,7 @@ fun TransactionDetailsScreen(navController: NavController, modifier: Modifier = 
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
 
-        CustomHeader(title = stringResource(R.string.successful_transaction)) {
+        CustomHeader(title = R.string.successful_transaction) {
             navController.popBackStack()
         }
         // Status Icon

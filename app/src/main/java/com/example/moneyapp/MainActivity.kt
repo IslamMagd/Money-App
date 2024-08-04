@@ -4,6 +4,8 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import com.example.moneyapp.navigation.StartNavHost
+import com.example.moneyapp.ui.screens.main.MainScreen
 import com.example.moneyapp.ui.theme.MoneyAppTheme
 
 class MainActivity : ComponentActivity() {
@@ -12,7 +14,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             MoneyAppTheme {
-
+                MainScreen()
             }
         }
     }

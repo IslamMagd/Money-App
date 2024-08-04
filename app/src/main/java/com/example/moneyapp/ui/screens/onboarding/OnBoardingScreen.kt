@@ -21,10 +21,11 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.moneyapp.R
-import com.example.moneyapp.routes.Route.SIGNIN
+import com.example.moneyapp.navigation.Route.SIGNIN
 import com.example.moneyapp.ui.theme.Dark_pink
 import com.example.moneyapp.ui.theme.Light_pink
 import com.example.moneyapp.ui.commonUi.button.ClickedButton
+import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -83,12 +84,18 @@ fun OnBoardingScreen(navController: NavController, modifier: Modifier = Modifier
     ) {
         ClickedButton(
             onClick = {
+                coroutineScope.launch {
+                    if (pagerState.currentPage < pagerState.pageCount - 1) {
+                        pagerState.scrollToPage(pagerState.currentPage + 1)
+                    } else {
+                        navController.navigate(SIGNIN)
+                    }
+                }
 
             },
             textId = R.string.next,
             modifier = Modifier
                 .padding(16.dp)
-
         )
     }
 
