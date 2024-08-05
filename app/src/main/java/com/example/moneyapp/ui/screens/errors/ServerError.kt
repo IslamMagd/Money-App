@@ -30,7 +30,7 @@ import com.example.moneyapp.ui.theme.Dark_pink
 import com.example.moneyapp.ui.theme.Light_pink
 import com.example.moneyapp.ui.theme.mediumBlackCenter24
 import com.example.moneyapp.ui.commonUi.button.ClickedButton
-import com.example.moneyapp.ui.commonUi.button.OutlinedButton
+import com.example.moneyapp.ui.commonUi.button.CustomOutlinedButton
 
 @Composable
 fun ServerErrorScreen(
@@ -88,7 +88,7 @@ fun ServerErrorScreen(
 
         Spacer(modifier = Modifier.height(24.dp))
 
-        OutlinedButton(textId = R.string.message_us, onClick = {
+        CustomOutlinedButton(textId = R.string.message_us, onClick = {
             val intent =
                 Intent(Intent.ACTION_DIAL, Uri.parse(context.getString(R.string.tel) +
                         context.getString(R.string._19888)))

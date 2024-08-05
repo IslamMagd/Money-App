@@ -43,7 +43,7 @@ fun CustomButton(
 
 
 @Composable
-fun OutlinedButton(
+fun CustomOutlinedButton(
     @StringRes textId: Int,
     onClick: () -> Unit
 ) {

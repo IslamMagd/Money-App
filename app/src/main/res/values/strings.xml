@@ -69,4 +69,17 @@
     <string name="back_to_home">Back to Home</string>
     <string name="add_to_favorite">Add to favorite</string>
 
+    <string name="remember_me_next_time">Remember me next time?</string>
+    <string name="help">Help</string>
+    <string name="password_is_too_weak">Password is too weak.</string>
+    <string name="please_enter_a_valid_email_address">Please enter a valid email address.</string>
+    <string name="previous">previous\n</string>
+    <string name="my_accounts">My Accounts</string>
+    <string name="add_new_account">Add New Account</string>
+    <string name="select_currency">Select Currency</string>
+    <string name="get_started">"Get Started "</string>
+    <string name="add_card">Add Card</string>
+    <string name="bank_card_otp">Bank Card OTP</string>
+    <string name="connect_another_account">Connect another account</string>
+
 </resources>

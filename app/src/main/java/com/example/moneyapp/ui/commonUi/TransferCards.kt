@@ -8,98 +8,142 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.material3.Icon
 import androidx.compose.ui.unit.sp
 import com.example.moneyapp.R
-import com.example.moneyapp.ui.theme.GrayG40
+import com.example.moneyapp.ui.theme.RedP300
 import com.example.moneyapp.ui.theme.RedP50
 import com.example.moneyapp.ui.theme.YelloS400
 
 @Composable
-fun CombineTwoCards(modifier: Modifier = Modifier) {
+fun CombineTwoCards(modifier: Modifier = Modifier,IsTransferIcon: Boolean = true) {
     Column(
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.spacedBy((-20).dp) // Adjust this value to control the overlap
+        modifier = modifier
+            .padding(16.dp)
+            .verticalScroll(rememberScrollState()) // For scrolling if content overflows
     ) {
-        SingleCard(name = "islam magdy", account = "752001", isFrom = true )
-        TransferOrSuccesIcon(false)
-        SingleCard(name = "islam ibrahim", account = "752001", isFrom = false )
+        // From section
+        TransactionDetailCard(
+            label = "From",
+            name = "Asmaa Dosuky",
+            account = "Account xxxx7890",
+            icon = painterResource(id = R.drawable.ic_bank)
+        )
 
+        TransactionDetailCard(
+            label = "To",
+            name = "Jonathon Smith",
+            account = "Account xxxx7890",
+            icon = painterResource(id = R.drawable.ic_bank)
+        )
+        TransferOrSuccesIcon(IsTransferIcon)
     }
 }
 
+
 @Composable
-fun SingleCard(name: String, account: String, isFrom: Boolean,modifier: Modifier = Modifier) {
+fun TransactionDetailCard(label: String, name: String, account: String, icon: Painter) {
     Card(
-        colors = CardDefaults.cardColors(containerColor = RedP50),
-        modifier = modifier
+        modifier = Modifier
             .fillMaxWidth()
-            .padding(8.dp)
-    ){
+            .padding(vertical = 4.dp),
+        shape = RoundedCornerShape(8.dp),
+        colors = CardDefaults.cardColors(RedP50)
+    ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
-            modifier = modifier.padding(16.dp)
-
+            modifier = Modifier
+                .padding(16.dp)
         ) {
-            Box(
-                modifier = Modifier
-                    .size(40.dp)
-                    .clip(CircleShape)
-                    .background(GrayG40),
-                contentAlignment = Alignment.Center
+            Card(
+                modifier = Modifier.size(width = 50.dp, height = 50.dp),
+                elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
+                shape = RoundedCornerShape(50.dp),
+                colors = CardDefaults.cardColors(containerColor = Color.LightGray)
             ) {
-                Icon(
-                    imageVector = ImageVector.vectorResource(id = R.drawable.ic_bank2),
-                    contentDescription = "cnotification icon"
+                Column(
+                    verticalArrangement = Arrangement.Center,
+                    horizontalAlignment = Alignment.End
+                ) {
+                    Icon(
+                        painter = icon,
+                        contentDescription = "Transaction Icon",
+                        tint = Color.Black,
+                        modifier = Modifier
+                            .padding(8.dp)
+                            .fillMaxSize()
+                    )
+
+                }
+
+            }
+
+
+            Spacer(modifier = Modifier.width(24.dp))
+            Column {
+                Text(
+                    text = label,
+                    style = MaterialTheme.typography.bodySmall.copy(color = RedP300),
+                    fontWeight = FontWeight(500),
+                    fontSize = 16.sp
+                )
+                Text(
+                    text = name,
+                    style = MaterialTheme.typography.bodyMedium.copy(fontWeight = FontWeight.Bold),
+                    fontSize = 20.sp,
+                    modifier = Modifier.padding(vertical = 8.dp)
+
+                )
+                Text(
+                    text = account,
+                    style = MaterialTheme.typography.bodySmall.copy(color = Color.Gray),
+                    fontSize = 16.sp
                 )
             }
-            Spacer(modifier = Modifier.width(16.dp))
-            Column {
-                Text(text = if (isFrom) "From" else "To", color = Color(0xFFD32F2F), fontWeight = FontWeight.Bold)
-                Spacer(modifier = Modifier.height(8.dp))
-                Text(text = name, fontWeight = FontWeight.Bold, fontSize = 18.sp)
-                Spacer(modifier = Modifier.height(8.dp))
-                Text(text = account)
-            }
         }
-
     }
 }
 
 @Composable
 fun TransferOrSuccesIcon(isTransferIcon: Boolean, modifier: Modifier = Modifier) {
     Box(
-        modifier = Modifier
-            .size(60.dp)
-            .clip(CircleShape)
-            .background(YelloS400),
-        contentAlignment = Alignment.Center
+        contentAlignment = Alignment.Center,
+        modifier = modifier
+            .fillMaxWidth()
+            .offset(y = (-140).dp)
     ) {
         val iconResId = if (isTransferIcon) R.drawable.ic_transfer_money else R.drawable.ic_check
         Icon(
             imageVector = ImageVector.vectorResource(id = iconResId),
-            contentDescription = "Center Icon",
+            contentDescription = "Icon",
             tint = Color.White,
-            modifier = Modifier.size(30.dp)
+            modifier = Modifier
+                .background(Color(YelloS400.value), shape = CircleShape)
+                .size(36.dp)
+                .padding(4.dp)
         )
     }
 }

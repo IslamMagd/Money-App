@@ -8,8 +8,10 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -27,6 +29,7 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.moneyapp.R
+import com.example.moneyapp.ui.theme.GrayG70
 
 @Composable
 fun CustomTextField(
@@ -39,8 +42,12 @@ fun CustomTextField(
     isPassord: Boolean = false,
     onValueChange: (String) -> Unit = {},
     onClick: () -> Unit = {},
-    isReadOnly: Boolean = false
+    isReadOnly: Boolean = false,
+    keyboardOptions: KeyboardOptions,
+    iserror: Boolean = false,
 ) {
+
+
     var passwordVisible by remember { mutableStateOf(false) }
     val passwordIcon = if (passwordVisible) painterResource(id = R.drawable.ic_close_eye)
     else painterResource(id = R.drawable.ic_open_eye)
@@ -49,17 +56,41 @@ fun CustomTextField(
             text = text,
             modifier = modifier
                 .align(Alignment.Start)
-                .padding( top = 8.dp)
+                .padding(top = 8.dp)
 
         )
 
+
+
         OutlinedTextField(
+
+            isError = iserror,
+            colors = OutlinedTextFieldDefaults.colors(
+
+                unfocusedTextColor = GrayG70,
+                unfocusedBorderColor = GrayG70,
+                unfocusedTrailingIconColor = GrayG70,
+                unfocusedLabelColor = GrayG70,
+                focusedBorderColor = Color.Black,
+                focusedTextColor = Color.Black,
+                focusedTrailingIconColor = Color.Black,
+                focusedLabelColor = Color.Black,
+                cursorColor = Color.Black,
+                errorCursorColor = Color.Red,
+                errorLabelColor = Color.Red,
+                errorTrailingIconColor = Color.Red,
+                errorBorderColor = Color.Red,
+                errorTextColor = Color.Red,
+
+
+                ),
+
+            keyboardOptions = keyboardOptions,
             label = {
                 Text(
-                    text = message,
+                    text = if (value.isEmpty()) message else "",
                     fontSize = 16.sp,
                     color = Color.Black.copy(alpha = 0.5f)
-
                 )
             },
             value = value,

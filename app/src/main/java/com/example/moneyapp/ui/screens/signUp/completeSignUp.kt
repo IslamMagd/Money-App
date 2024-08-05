@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material3.Card
@@ -41,6 +42,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -109,27 +111,29 @@ fun CompleteSignUpScreen(navController: NavController, modifier: Modifier = Modi
             text = stringResource(R.string.country),
             message = stringResource(R.string.select_your_country),
             value = selectedCountry,
+            imageRes = painterResource(id = R.drawable.ic_down_arrow),
+            trailingIconOn = true,
+            onValueChange = { },
             onClick = {
 
                 isSheetOneOpen = !isSheetOneOpen
 
             },
-            onValueChange = { },
-            imageRes = painterResource(id = R.drawable.ic_down_arrow),
-            trailingIconOn = true,
-            isReadOnly = true
+            isReadOnly = true,
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email)
         )
         CustomTextField(
             text = stringResource(R.string.date_of_birth),
             message = stringResource(R.string.dd_mm_yyyy),
             value = selectedDate,
+            imageRes = painterResource(id = R.drawable.ic_date),
+            trailingIconOn = true,
+            onValueChange = { },
             onClick = {
                 openDialog.value = true
             },
-            onValueChange = { },
-            imageRes = painterResource(id = R.drawable.ic_date),
-            trailingIconOn = true,
             isReadOnly = true,
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
 
             )
 
@@ -185,10 +189,10 @@ fun CountryList(
     val selectedCountry = remember { mutableStateOf("") }
     val countries = listOf(
         Pair("Egypt", "🇪🇬"),
+        Pair("Saudi Arabia", "🇸🇦"),
         Pair("Mexico", "🇲🇽"),
         Pair("Argentina", "🇦🇷"),
         Pair("South Korea", "🇰🇷"),
-        Pair("Saudi Arabia", "🇸🇦"),
         Pair("South Africa", "🇿🇦"),
 
         )
@@ -207,7 +211,7 @@ fun CountryList(
 
                     },
                 colors = if (currentCountry == country) CardDefaults.cardColors(RedP300.copy(alpha = 0.2f)) else CardDefaults.cardColors(
-                    Color.White
+                    Color.Transparent
                 ),
             ) {
                 Row(

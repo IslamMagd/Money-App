@@ -16,6 +16,7 @@ val Dark_pink = Color(0xFFfeebef)
 
 val Gray = Color(0xFF3C3A37)
 val Light_Gray = Color(0xFFB0AFAE)
+val bg = Color(0xFFfff7e7)
 
 val RedP50 = Color(0xFFF3E9EB)
 val RedP75 = Color(0xFFCEA3AC)

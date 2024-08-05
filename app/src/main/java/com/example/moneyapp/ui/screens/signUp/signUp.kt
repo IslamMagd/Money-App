@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.text.ClickableText
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -28,6 +29,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -36,11 +38,13 @@ import androidx.navigation.NavController
 import com.example.moneyapp.R
 import com.example.moneyapp.navigation.Route.SIGNIN
 import com.example.moneyapp.navigation.Route.SIGNUP2
+import com.example.moneyapp.ui.commonUi.button.ClickedButton
+import com.example.moneyapp.ui.commonUi.textFields.CustomTextField
+import com.example.moneyapp.ui.screens.signIn.isEmailValid
+import com.example.moneyapp.ui.screens.signIn.isPasswordValid
 import com.example.moneyapp.ui.theme.Dark_pink
 import com.example.moneyapp.ui.theme.Dark_red_bg
 import com.example.moneyapp.ui.theme.Light_pink
-import com.example.moneyapp.ui.commonUi.button.ClickedButton
-import com.example.moneyapp.ui.commonUi.textFields.CustomTextField
 
 
 @Composable
@@ -48,6 +52,10 @@ fun SignUpScreen(navController: NavController) {
     var fullName by remember { mutableStateOf("") }
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
+
+    var isValid by remember { mutableStateOf(true)}
+    var isValidPassword by remember { mutableStateOf(true) }
+    var isValidEmail by remember { mutableStateOf(true) }
 
     Box(
         modifier = Modifier
@@ -67,11 +75,16 @@ fun SignUpScreen(navController: NavController) {
                 .padding(16.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
+
             Spacer(modifier = Modifier.height(32.dp))
 
             Text(stringResource(R.string.sign_up), fontSize = 24.sp)
             Spacer(modifier = Modifier.height(64.dp))
-            Text(stringResource(R.string.speedo_transfer), fontSize = 24.sp, fontWeight = FontWeight.Bold)
+            Text(
+                stringResource(R.string.speedo_transfer),
+                fontSize = 24.sp,
+                fontWeight = FontWeight.Bold
+            )
 
 
             Spacer(modifier = Modifier.height(64.dp))
@@ -79,28 +92,66 @@ fun SignUpScreen(navController: NavController) {
                 text = stringResource(R.string.full_name),
                 message = stringResource(R.string.enter_your_full_name),
                 value = fullName,
-                onValueChange = { fullName = it },
                 imageRes = painterResource(id = R.drawable.ic_user),
-                trailingIconOn = true
+                trailingIconOn = true,
+                onValueChange = { fullName = it },
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text)
             )
+
+
+
+
             CustomTextField(
                 text = stringResource(R.string.email),
                 message = stringResource(R.string.enter_your_email_address),
                 value = email,
-                onValueChange = { email = it },
                 imageRes = painterResource(id = R.drawable.ic_email),
-                trailingIconOn = true
+                trailingIconOn = true,
+                onValueChange = { email = it },
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
+                iserror = !isValidEmail
             )
-            CustomTextField(text = stringResource(R.string.password),
+            if (!isValidEmail) {
+                Text(
+                    text = stringResource(R.string.please_enter_a_valid_email_address),
+                    color = Color.Red,
+                    modifier = Modifier
+                        .padding(8.dp)
+                        .align(Alignment.Start)
+                )
+            }
+
+
+            CustomTextField(
+                text = stringResource(R.string.password),
                 message = stringResource(R.string.enter_your_password),
                 value = password,
                 isPassord = true,
-                onValueChange = { password = it }
+                onValueChange = { password = it },
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
+                iserror = !isValidPassword
             )
+            if (!isValidPassword) {
+                Text(
+                    text = stringResource(R.string.password_is_too_weak),
+                    color = Color.Red,
+                    modifier = Modifier.align(Alignment.Start)
+                )
+            }
+
+
             Spacer(modifier = Modifier.height(24.dp))
 
             ClickedButton(
-                onClick = {  navController.navigate(SIGNUP2) },
+                onClick = {
+
+                    isValidEmail = isEmailValid(email)
+                    isValidPassword = isPasswordValid(password)
+                    isValid = isPasswordValid(password) && isEmailValid(email)
+
+                    if (isValid)
+                        navController.navigate(SIGNUP2)
+                },
                 textId = R.string.Sign_up,
                 modifier = Modifier.padding(20.dp)
             )
@@ -112,13 +163,19 @@ fun SignUpScreen(navController: NavController) {
                 horizontalArrangement = Arrangement.Center,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Text(stringResource(R.string.already_have_an_account), fontSize = 16.sp, color = Gray)
+                Text(
+                    stringResource(R.string.already_have_an_account),
+                    fontSize = 16.sp,
+                    color = Gray
+                )
 
                 Spacer(modifier = Modifier.width(4.dp))
 
                 ClickableText(
                     text = AnnotatedString(stringResource(R.string.sign_in)),
-                    onClick = {  navController.navigate(SIGNIN) },
+                    onClick = { navController.navigate(SIGNIN) },
+
+
                     style = androidx.compose.ui.text.TextStyle(
                         color = Color(Dark_red_bg.value),
                         textDecoration = TextDecoration.Underline,
@@ -128,6 +185,7 @@ fun SignUpScreen(navController: NavController) {
                 )
             }
         }
+
     }
 }
 

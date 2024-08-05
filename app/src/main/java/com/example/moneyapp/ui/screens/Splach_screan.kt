@@ -30,7 +30,7 @@ fun SplashScreen(navController: NavController) {
         Text(
             text = stringResource(R.string.speedo_transfer),
             color = White,
-            fontSize = 24.sp,
+            fontSize = 32.sp,
             style = MaterialTheme.typography.headlineSmall
         )
     }

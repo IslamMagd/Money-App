@@ -23,6 +23,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.moneyapp.ui.theme.RedP300
 
 @Composable
 fun StepProgressBar(
@@ -66,17 +67,17 @@ fun StepCircle(isActive: Boolean, stepNumber: String) {
             .size(32.dp)
             .border(
                 2.dp,
-                if (isActive) Color(0xFFB00020) else Color.Gray.copy(alpha = 0.3f),
+                if (isActive) Color(RedP300.value) else Color.Gray.copy(alpha = 0.3f),
                 CircleShape
             )
             .background(
-                if (isActive) Color(0xFFB00020) else Color.Gray.copy(alpha = 0.3f),
+                Color.White ,
                 CircleShape
             )
     ) {
         Text(
             text = stepNumber,
-            color = Color.White,
+            color = if (isActive) Color(RedP300.value) else Color.Gray.copy(alpha = 0.3f),
             fontSize = 12.sp,
             fontWeight = FontWeight.Bold
         )

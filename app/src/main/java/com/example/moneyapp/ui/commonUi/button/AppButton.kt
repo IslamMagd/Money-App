@@ -23,5 +23,5 @@ fun NotClickedButton(
     onClick: () -> Unit,
     @StringRes textId: Int,
 ){
-    CustomButton(onClick = { onClick }, containerColor = GrayG100 , textId = textId , textStyle = interGrayG0medium16 )
+    CustomButton(onClick = { onClick() }, containerColor = GrayG100 , textId = textId , textStyle = interGrayG0medium16 )
 }
