@@ -43,11 +43,17 @@ import com.example.moneyapp.ui.commonUi.button.ClickedButton
 import com.example.moneyapp.ui.commonUi.textFields.CustomTextField
 
 
+
 @Composable
-fun SignUpScreen(navController: NavController) {
+fun SignUpScreen(
+    navController: NavController
+) {
     var fullName by remember { mutableStateOf("") }
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
+
+
+
 
     Box(
         modifier = Modifier
@@ -100,7 +106,9 @@ fun SignUpScreen(navController: NavController) {
             Spacer(modifier = Modifier.height(24.dp))
 
             ClickedButton(
-                onClick = {  navController.navigate(SIGNUP2) },
+                onClick = {
+                    navController.navigate("$SIGNUP2/$fullName/$email/$password")
+                          },
                 textId = R.string.Sign_up,
                 modifier = Modifier.padding(20.dp)
             )

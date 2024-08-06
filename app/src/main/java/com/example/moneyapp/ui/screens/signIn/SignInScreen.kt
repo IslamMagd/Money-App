@@ -1,6 +1,8 @@
 package com.example.moneyapp.ui.screens.signIn
 
 import android.content.Intent
+import android.util.Log
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -15,6 +17,8 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.text.ClickableText
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -42,13 +46,24 @@ import com.example.moneyapp.ui.theme.Dark_red_bg
 import com.example.moneyapp.ui.theme.Light_pink
 import com.example.moneyapp.ui.commonUi.button.ClickedButton
 import com.example.moneyapp.ui.commonUi.textFields.CustomTextField
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.moneyapp.model.LoginRequst
 
 
 @Composable
-fun SignInScreen(navController: NavController) {
+fun SignInScreen(
+    navController: NavController,
+    viewModel: SigninViewModel = viewModel()
+) {
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     val context = navController.context
+
+    val login by viewModel.login.collectAsState()
+
+    val hasError by viewModel.hasError.collectAsState()
+    if(hasError.contains("401"))
+        Toast.makeText(LocalContext.current, "incorrect email or password", Toast.LENGTH_SHORT).show()
 
     Box(
         modifier = Modifier
@@ -98,16 +113,25 @@ fun SignInScreen(navController: NavController) {
                 onValueChange = { password = it }
             )
             Spacer(modifier = Modifier.height(24.dp))
-
             ClickedButton(
                 onClick = {
-                    val context = navController.context
-                    val intent = Intent(context, MainActivity::class.java)
-                    context.startActivity(intent)
+                     viewModel.loginUser(
+                         LoginRequst(email, password)
+                    )
                 },
                 textId = R.string.Sign_in,
                 modifier = Modifier.padding(20.dp)
             )
+
+            login?.let {response ->
+                LaunchedEffect(response) {
+                    val context = navController.context
+                    val intent = Intent(context, MainActivity::class.java).apply {
+                        putExtra("TOKEN", response.token)
+                    }
+                    context.startActivity(intent)
+                }
+            }
 
             Spacer(modifier = Modifier.height(24.dp))
 
