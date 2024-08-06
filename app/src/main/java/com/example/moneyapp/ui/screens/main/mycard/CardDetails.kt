@@ -40,7 +40,7 @@ fun CardDetailsScreen(navController: NavController, modifier: Modifier = Modifie
     Column (
         modifier = modifier.padding(16.dp)
     ){
-        Spacer(modifier = Modifier.padding(16.dp))
+
         CustomHeader(title = R.string.add_card) {
             navController.popBackStack()
         }

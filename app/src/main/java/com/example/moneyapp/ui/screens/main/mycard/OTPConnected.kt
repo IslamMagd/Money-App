@@ -40,7 +40,6 @@ fun OTPConnectedScreen(navController: NavController, modifier: Modifier = Modifi
             navController.popBackStack()
         }
 
-        Spacer(modifier =  Modifier.height(70.dp))
         Column (
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally,

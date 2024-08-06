@@ -51,7 +51,7 @@ fun TransactionsScreen(navController: NavController, modifier: Modifier = Modifi
     Column(
         modifier = modifier
             .fillMaxSize()
-            .padding(top =32.dp )
+            .padding(top =16.dp )
             .background(
                 brush = Brush.verticalGradient(
                     colors = listOf(

@@ -1,7 +1,7 @@
 package com.example.moneyapp.ui.screens.signUp
 
 import android.annotation.SuppressLint
-import android.content.Intent
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -29,6 +29,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.rememberDatePickerState
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -43,24 +44,33 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import com.example.moneyapp.MainActivity
 import com.example.moneyapp.R
+import com.example.moneyapp.model.SignupRequst
+import com.example.moneyapp.ui.commonUi.button.ClickedButton
+import com.example.moneyapp.ui.commonUi.textFields.CustomTextField
 import com.example.moneyapp.ui.theme.Dark_pink
 import com.example.moneyapp.ui.theme.Light_pink
 import com.example.moneyapp.ui.theme.RedP300
-import com.example.moneyapp.ui.commonUi.button.ClickedButton
-import com.example.moneyapp.ui.commonUi.textFields.CustomTextField
 import java.text.SimpleDateFormat
 import java.util.Calendar
 
 @SuppressLint("SimpleDateFormat")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun CompleteSignUpScreen(navController: NavController, modifier: Modifier = Modifier) {
+fun CompleteSignUpScreen(
+    navController: NavController,
+    name: String,
+    email: String,
+    password: String,
+    viewModel: SignupViewModel = viewModel(),
+    modifier: Modifier = Modifier) {
+
+//    Log.d("trace","$name$email$password")
+
     val sheetStateOne = rememberModalBottomSheetState()
     var isSheetOneOpen by rememberSaveable { mutableStateOf(false) }
     var selectedCountry by remember { mutableStateOf("") }
@@ -69,6 +79,12 @@ fun CompleteSignUpScreen(navController: NavController, modifier: Modifier = Modi
     val datePickerState = rememberDatePickerState()
     val formatter = SimpleDateFormat("dd/MM/yyyy")
     val context = LocalContext.current
+
+    val signup by viewModel.signup.collectAsState()
+
+    val hasError by viewModel.hasError.collectAsState()
+    if(hasError.contains("409"))
+        Toast.makeText(LocalContext.current, "This username/email already exists", Toast.LENGTH_LONG).show()
     Column(
         modifier = modifier
             .fillMaxSize()
@@ -159,7 +175,8 @@ fun CompleteSignUpScreen(navController: NavController, modifier: Modifier = Modi
                             openDialog.value = false
                             val calendar = Calendar.getInstance()
                             calendar.timeInMillis = datePickerState.selectedDateMillis!!
-                            selectedDate = formatter.format(calendar.time)
+                            val dateFormatter = SimpleDateFormat("yyyy-MM-dd")
+                            selectedDate = dateFormatter.format(calendar.time)
 
                         },
                     color = RedP300,
@@ -172,9 +189,20 @@ fun CompleteSignUpScreen(navController: NavController, modifier: Modifier = Modi
 
         Spacer(modifier = Modifier.height(24.dp))
 
+
         ClickedButton(onClick = {
-            val intent = Intent(context, MainActivity::class.java)
-            context.startActivity(intent)
+//            Log.d("trace", "$signupRequst"  )
+            viewModel.signupUser(
+                SignupRequst(
+                    username = name,
+                    password = password,
+                    birthdate = selectedDate,
+                    email = email,
+                    country = selectedCountry
+                )
+            )
+//            val intent = Intent(context, MainActivity::class.java)
+//            context.startActivity(intent)
         }, textId = R.string.Continue, modifier = Modifier.padding(16.dp))
     }
 
@@ -189,10 +217,10 @@ fun CountryList(
     val selectedCountry = remember { mutableStateOf("") }
     val countries = listOf(
         Pair("Egypt", "🇪🇬"),
-        Pair("Saudi Arabia", "🇸🇦"),
         Pair("Mexico", "🇲🇽"),
         Pair("Argentina", "🇦🇷"),
         Pair("South Korea", "🇰🇷"),
+        Pair("Saudi Arabia", "🇸🇦"),
         Pair("South Africa", "🇿🇦"),
 
         )
@@ -211,7 +239,7 @@ fun CountryList(
 
                     },
                 colors = if (currentCountry == country) CardDefaults.cardColors(RedP300.copy(alpha = 0.2f)) else CardDefaults.cardColors(
-                    Color.Transparent
+                    Color.White
                 ),
             ) {
                 Row(
@@ -249,10 +277,4 @@ fun CountryList(
             }
         }
     }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun CompleteProfileScreenPreview() {
-    CompleteSignUpScreen( navController = NavController(LocalContext.current))
 }

@@ -29,7 +29,7 @@ fun CustomHeader(@StringRes title: Int, onBackClick: () -> Unit) {
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(20.dp)
+            .padding(top = 32.dp, start = 16.dp, end = 16.dp)
     ) {
         Box(modifier = Modifier.clickable { onBackClick() }) {
             Icon(

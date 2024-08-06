@@ -36,12 +36,12 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.moneyapp.R
+import com.example.moneyapp.logic.isEmailValid
+import com.example.moneyapp.logic.isPasswordValid
 import com.example.moneyapp.navigation.Route.SIGNIN
 import com.example.moneyapp.navigation.Route.SIGNUP2
 import com.example.moneyapp.ui.commonUi.button.ClickedButton
 import com.example.moneyapp.ui.commonUi.textFields.CustomTextField
-import com.example.moneyapp.ui.screens.signIn.isEmailValid
-import com.example.moneyapp.ui.screens.signIn.isPasswordValid
 import com.example.moneyapp.ui.theme.Dark_pink
 import com.example.moneyapp.ui.theme.Dark_red_bg
 import com.example.moneyapp.ui.theme.Light_pink
@@ -150,7 +150,7 @@ fun SignUpScreen(navController: NavController) {
                     isValid = isPasswordValid(password) && isEmailValid(email)
 
                     if (isValid)
-                        navController.navigate(SIGNUP2)
+                        navController.navigate("$SIGNUP2/$fullName/$email/$password")
                 },
                 textId = R.string.Sign_up,
                 modifier = Modifier.padding(20.dp)

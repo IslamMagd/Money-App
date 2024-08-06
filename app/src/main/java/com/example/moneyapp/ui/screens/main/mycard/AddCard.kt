@@ -28,7 +28,7 @@ fun AddCardScreen(navController: NavController, modifier: Modifier = Modifier) {
     Column (
         modifier = modifier.fillMaxSize().padding(16.dp)
     ) {
-        Spacer(modifier = Modifier.padding(16.dp))
+
         CustomHeader(title = R.string.select_currency) {
             navController.popBackStack()
         }

@@ -52,7 +52,6 @@ fun OTPEnteredScreen(navController: NavController, modifier: Modifier = Modifier
             .fillMaxSize()
             .padding(16.dp),
     ) {
-        Spacer(modifier = Modifier.padding(16.dp))
         CustomHeader(title = R.string.bank_card_otp) {
             navController.popBackStack()
         }
