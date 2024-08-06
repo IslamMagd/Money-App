@@ -14,6 +14,6 @@ fun saveCredentials(email: String, pass: String, cbState: Boolean, context: Cont
         editor.putString("password", "")
     }
     editor.apply()
-    val intent = Intent(context, MainActivity::class.java)
-    context.startActivity(intent)
+//    val intent = Intent(context, MainActivity::class.java)
+//    context.startActivity(intent)
 }

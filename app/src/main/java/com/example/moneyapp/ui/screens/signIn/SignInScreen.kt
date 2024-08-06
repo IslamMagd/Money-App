@@ -1,6 +1,9 @@
 package com.example.moneyapp.ui.screens.signIn
 
 import android.content.Context
+import android.content.Intent
+import android.util.Log
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -17,6 +20,8 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -37,6 +42,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.example.moneyapp.MainActivity
 import com.example.moneyapp.R
 import com.example.moneyapp.data.saveCredentials
 import com.example.moneyapp.navigation.Route.SIGNUP
@@ -45,10 +51,15 @@ import com.example.moneyapp.ui.commonUi.textFields.CustomTextField
 import com.example.moneyapp.ui.theme.Dark_pink
 import com.example.moneyapp.ui.theme.Dark_red_bg
 import com.example.moneyapp.ui.theme.Light_pink
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.moneyapp.model.LoginRequst
 
 
 @Composable
-fun SignInScreen(navController: NavController) {
+fun SignInScreen(
+    navController: NavController,
+    viewModel: SigninViewModel = viewModel()
+) {
 
     val context = navController.context
 
@@ -66,6 +77,12 @@ fun SignInScreen(navController: NavController) {
     var checkBoxState by remember { mutableStateOf(true) }
 
 
+
+    val login by viewModel.login.collectAsState()
+
+    val hasError by viewModel.hasError.collectAsState()
+    if(hasError.contains("401"))
+        Toast.makeText(LocalContext.current, "incorrect email or password", Toast.LENGTH_SHORT).show()
 
     Box(
         modifier = Modifier
@@ -111,15 +128,15 @@ fun SignInScreen(navController: NavController) {
                 trailingIconOn = true,
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
                 onValueChange = { email = it },
-                iserror = !isValidEmail
+//                iserror = !isValidEmail
             )
-            if (!isValidEmail) {
-                Text(
-                    text = stringResource(R.string.please_enter_a_valid_email_address),
-                    color = Color.Red,
-                    modifier = Modifier
-                )
-            }
+//            if (!isValidEmail) {
+//                Text(
+//                    text = stringResource(R.string.please_enter_a_valid_email_address),
+//                    color = Color.Red,
+//                    modifier = Modifier
+//                )
+//            }
 
 
             CustomTextField(
@@ -155,16 +172,31 @@ fun SignInScreen(navController: NavController) {
 
             ClickedButton(
                 onClick = {
-                    isValidEmail = isEmailValid(email)
-                    isValidPassword = isPasswordValid(password)
-                    isValid = isPasswordValid(password) && isEmailValid(email)
+//                    isValidEmail = isEmailValid(email)
+//                    isValidPassword = isPasswordValid(password)
+//                    isValid = isPasswordValid(password)
 
-                    if (isValid)
-                        saveCredentials(email, password, checkBoxState, context)
+//                    if (isValid)
+//                        saveCredentials(email, password, checkBoxState, context)
+
+                    viewModel.loginUser(
+                        LoginRequst(email, password)
+                    )
                 },
                 textId = R.string.Sign_in,
                 modifier = Modifier.padding(20.dp)
             )
+
+            login?.let {response ->
+                LaunchedEffect(response) {
+                    Log.d("trace", "${response.token}")
+                    val context = navController.context
+                    val intent = Intent(context, MainActivity::class.java).apply {
+//                        putExtra("TOKEN", response.token)
+                    }
+                    context.startActivity(intent)
+                }
+            }
 
             Spacer(modifier = Modifier.height(24.dp))
 

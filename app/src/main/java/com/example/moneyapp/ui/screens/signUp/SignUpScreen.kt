@@ -147,10 +147,10 @@ fun SignUpScreen(navController: NavController) {
 
                     isValidEmail = isEmailValid(email)
                     isValidPassword = isPasswordValid(password)
-                    isValid = isPasswordValid(password) && isEmailValid(email)
+                    isValid = isPasswordValid(password)
 
                     if (isValid)
-                        navController.navigate(SIGNUP2)
+                        navController.navigate("$SIGNUP2/$fullName/$email/$password")
                 },
                 textId = R.string.Sign_up,
                 modifier = Modifier.padding(20.dp)
