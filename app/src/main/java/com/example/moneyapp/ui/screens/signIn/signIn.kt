@@ -45,8 +45,6 @@ import androidx.navigation.NavController
 import com.example.moneyapp.MainActivity
 import com.example.moneyapp.R
 import com.example.moneyapp.data.saveCredentials
-import com.example.moneyapp.logic.isEmailValid
-import com.example.moneyapp.logic.isPasswordValid
 import com.example.moneyapp.model.LoginRequst
 import com.example.moneyapp.navigation.Route.SIGNUP
 import com.example.moneyapp.ui.commonUi.button.ClickedButton
@@ -76,7 +74,7 @@ fun SignInScreen(navController: NavController,viewModel: SigninViewModel = viewM
 
     val login by viewModel.login.collectAsState()
 
-    val hasError by viewModel.hasError.collectAsState()
+   val hasError by viewModel.hasError.collectAsState()
     if(hasError.contains("401"))
         Toast.makeText(LocalContext.current, "incorrect email or password", Toast.LENGTH_SHORT).show()
 
@@ -169,16 +167,18 @@ fun SignInScreen(navController: NavController,viewModel: SigninViewModel = viewM
 
             ClickedButton(
                 onClick = {
-                    isValidEmail = isEmailValid(email)
+ /*                   isValidEmail = isEmailValid(email)
                     isValidPassword = isPasswordValid(password)
                     isValid = isPasswordValid(password) && isEmailValid(email)
 
                     if (isValid) {
-                        saveCredentials(email, password, checkBoxState, context)
-                        viewModel.loginUser(
-                            LoginRequst(email, password)
-                        )
-                    }
+
+
+                    }*/
+                    saveCredentials(email, password, checkBoxState, context)
+                    viewModel.loginUser(
+                        LoginRequst(email, password)
+                    )
                           },
                 textId = R.string.Sign_in,
                 modifier = Modifier.padding(20.dp)

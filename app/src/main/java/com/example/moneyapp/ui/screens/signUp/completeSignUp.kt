@@ -1,7 +1,6 @@
 package com.example.moneyapp.ui.screens.signUp
 
 import android.annotation.SuppressLint
-import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -50,6 +49,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.moneyapp.R
 import com.example.moneyapp.model.SignupRequst
+import com.example.moneyapp.navigation.Route.SIGNIN
 import com.example.moneyapp.ui.commonUi.button.ClickedButton
 import com.example.moneyapp.ui.commonUi.textFields.CustomTextField
 import com.example.moneyapp.ui.theme.Dark_pink
@@ -82,9 +82,9 @@ fun CompleteSignUpScreen(
 
     val signup by viewModel.signup.collectAsState()
 
-    val hasError by viewModel.hasError.collectAsState()
+/*    val hasError by viewModel.hasError.collectAsState()
     if(hasError.contains("409"))
-        Toast.makeText(LocalContext.current, "This username/email already exists", Toast.LENGTH_LONG).show()
+        Toast.makeText(LocalContext.current, "This username/email already exists", Toast.LENGTH_LONG).show()*/
     Column(
         modifier = modifier
             .fillMaxSize()
@@ -201,8 +201,7 @@ fun CompleteSignUpScreen(
                     country = selectedCountry
                 )
             )
-//            val intent = Intent(context, MainActivity::class.java)
-//            context.startActivity(intent)
+            navController.navigate(SIGNIN)
         }, textId = R.string.Continue, modifier = Modifier.padding(16.dp))
     }
 
@@ -210,7 +209,6 @@ fun CompleteSignUpScreen(
 
 
 @Composable
-
 fun CountryList(
     currentCountry: String = "", onCountrySelected: (String) -> Unit = {}
 ) {

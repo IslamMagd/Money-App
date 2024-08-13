@@ -38,6 +38,7 @@ fun AddCardScreen(navController: NavController, modifier: Modifier = Modifier) {
             isSheetOneOpen = !isSheetOneOpen
             selectedCountry = it
         })
+
         Spacer(modifier = Modifier.padding(16.dp))
         ClickedButton(
             onClick = { navController.navigate(ADD_CARD_DETAILS) },
@@ -49,3 +50,5 @@ fun AddCardScreen(navController: NavController, modifier: Modifier = Modifier) {
 
 
 }
+
+

@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
@@ -16,10 +17,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.moneyapp.R
@@ -39,6 +38,7 @@ fun CardDetailsScreen(navController: NavController, modifier: Modifier = Modifie
 
     Column (
         modifier = modifier.padding(16.dp)
+            .fillMaxSize()
     ){
 
         CustomHeader(title = R.string.add_card) {
@@ -116,10 +116,4 @@ fun CardDetailsScreen(navController: NavController, modifier: Modifier = Modifie
 
 fun Char.isSpecialCharacter(): Boolean {
     return !this.isLetterOrDigit() && !this.isWhitespace()
-}
-
-@Preview
-@Composable
-private fun previewCardDetailsScreen() {
-    CardDetailsScreen(navController = NavController(LocalContext.current))
 }
