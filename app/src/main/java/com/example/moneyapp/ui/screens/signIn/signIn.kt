@@ -226,7 +226,7 @@ fun SignInScreen(navController: NavController,viewModel: SigninViewModel = viewM
 }
 
 fun saveToken(token: String, context: Context){
-    val editor = context.getSharedPreferences("user_token", Context.MODE_PRIVATE).edit()
+    val editor = context.getSharedPreferences("user_data", Context.MODE_PRIVATE).edit()
     editor.putString("token", token)
     editor.apply()
 }
