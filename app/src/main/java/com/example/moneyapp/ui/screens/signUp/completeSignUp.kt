@@ -1,6 +1,7 @@
 package com.example.moneyapp.ui.screens.signUp
 
 import android.annotation.SuppressLint
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -82,9 +83,9 @@ fun CompleteSignUpScreen(
 
     val signup by viewModel.signup.collectAsState()
 
-/*    val hasError by viewModel.hasError.collectAsState()
+   val hasError by viewModel.hasError.collectAsState()
     if(hasError.contains("409"))
-        Toast.makeText(LocalContext.current, "This username/email already exists", Toast.LENGTH_LONG).show()*/
+        Toast.makeText(LocalContext.current, "This username/email already exists", Toast.LENGTH_LONG).show()
     Column(
         modifier = modifier
             .fillMaxSize()
