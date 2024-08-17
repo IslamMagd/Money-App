@@ -32,6 +32,7 @@ import androidx.navigation.NavController
 import com.example.moneyapp.MainActivity
 import com.example.moneyapp.R
 import com.example.moneyapp.model.AddCardRequst
+import com.example.moneyapp.navigation.BottomBarRoutes
 import com.example.moneyapp.navigation.MainRoutes.OTP
 import com.example.moneyapp.ui.commonUi.CustomHeader
 import com.example.moneyapp.ui.commonUi.button.ClickedButton
@@ -144,9 +145,10 @@ fun CardDetailsScreen(
         )
 
         addCardResult?.let {response ->
+            saveCardNameAndNumber(response.cardholderName, response.cardNumber, context)
             LaunchedEffect(response) {
                 Log.d("trace","${response.cardholderName} and ${response.cardNumber}")
-                navController.navigate(OTP)
+                navController.navigate(BottomBarRoutes.Cards.route)
             }
         }
     }
@@ -157,7 +159,14 @@ fun Char.isSpecialCharacter(): Boolean {
 }
 
 fun getToken(context: Context): String{
-    val prefs = context.getSharedPreferences("user_token", Context.MODE_PRIVATE)
+    val prefs = context.getSharedPreferences("user_data", Context.MODE_PRIVATE)
    val savedToken = prefs.getString("token","")!!
     return savedToken
+}
+
+fun saveCardNameAndNumber(cardholderName: String, cardNumber: String, context: Context){
+    val editor = context.getSharedPreferences("user_data", Context.MODE_PRIVATE).edit()
+    editor.putString("cardholder_name", cardholderName)
+    editor.putString("card_number", cardNumber)
+    editor.apply()
 }
