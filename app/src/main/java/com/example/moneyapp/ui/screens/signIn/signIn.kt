@@ -2,6 +2,7 @@ package com.example.moneyapp.ui.screens.signIn
 
 import android.content.Context
 import android.content.Intent
+import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -186,6 +187,8 @@ fun SignInScreen(navController: NavController,viewModel: SigninViewModel = viewM
 
             login?.let {response ->
                 LaunchedEffect(response) {
+                    saveToken(response.token, context)
+                    Log.d("trace","${response.token}")
                     val context = navController.context
                     val intent = Intent(context, MainActivity::class.java).apply {
                         putExtra("TOKEN", response.token)
@@ -220,6 +223,12 @@ fun SignInScreen(navController: NavController,viewModel: SigninViewModel = viewM
 
     }
 
+}
+
+fun saveToken(token: String, context: Context){
+    val editor = context.getSharedPreferences("user_token", Context.MODE_PRIVATE).edit()
+    editor.putString("token", token)
+    editor.apply()
 }
 
 

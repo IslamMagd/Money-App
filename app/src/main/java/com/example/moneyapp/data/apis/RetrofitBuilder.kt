@@ -1,16 +1,26 @@
 package com.example.moneyapp.data.apis
 
 import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 object RetrofitBuilder {
-    val tokenProvider = TokenProvider()
-    val authInterceptor = AuthInterceptor { tokenProvider.getToken() }
+//    val tokenProvider = TokenProvider()
+//    val authInterceptor = AuthInterceptor { tokenProvider.getToken() }
 
-    val okHttpClient = OkHttpClient.Builder()
-        .addInterceptor(authInterceptor)
-        .build()
+//    val okHttpClient = OkHttpClient.Builder()
+//        .addInterceptor(authInterceptor)
+//        .build()
+
+    private val loggingInterceptor = HttpLoggingInterceptor().apply {
+        level = HttpLoggingInterceptor.Level.BODY
+    }
+
+    private val okHttpClient = OkHttpClient.Builder().apply {
+        addInterceptor(loggingInterceptor)
+    }.build()
+
 
     private val retrofit = Retrofit
         .Builder()
