@@ -1,7 +1,9 @@
 package com.example.moneyapp.ui.screens.main
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.RowScope
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Icon
 import androidx.compose.material3.ListItemDefaults.contentColor
@@ -37,7 +39,8 @@ fun MainScreen() {
     Scaffold(
         bottomBar = { BottomBar(navController = navController) }
     ) { _ ->
-        BottomNavGraph(navController = navController,Modifier.background(
+        BottomNavGraph(navController = navController,Modifier
+        .background(
             brush = Brush.verticalGradient(
                 colors = listOf(
                     Color(Light_pink.value), Color(Dark_pink.value)
