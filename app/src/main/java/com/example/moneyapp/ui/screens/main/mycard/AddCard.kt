@@ -25,6 +25,11 @@ fun AddCardScreen(navController: NavController, modifier: Modifier = Modifier) {
     var isSheetOneOpen by rememberSaveable { mutableStateOf(false) }
     var selectedCountry by remember { mutableStateOf("") }
 
+    val currency = listOf(
+        Pair("EGP", "🇪🇬"),
+        Pair("USD", "🇺🇸")
+        )
+
     Column (
         modifier = modifier.fillMaxSize().padding(16.dp)
     ) {
@@ -34,7 +39,7 @@ fun AddCardScreen(navController: NavController, modifier: Modifier = Modifier) {
         }
 
 
-        CountryList(currentCountry = selectedCountry, onCountrySelected = {
+        CountryList( countries = currency ,currentCountry = selectedCountry, onCountrySelected = {
             isSheetOneOpen = !isSheetOneOpen
             selectedCountry = it
         })

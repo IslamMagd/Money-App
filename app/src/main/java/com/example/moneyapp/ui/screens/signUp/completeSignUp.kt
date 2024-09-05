@@ -154,13 +154,23 @@ fun CompleteSignUpScreen(
 
             )
 
+        val countries = listOf(
+            Pair("Egypt", "🇪🇬"),
+            Pair("Mexico", "🇲🇽"),
+            Pair("Argentina", "🇦🇷"),
+            Pair("South Korea", "🇰🇷"),
+            Pair("Saudi Arabia", "🇸🇦"),
+            Pair("South Africa", "🇿🇦"),
+
+            )
+
         if (isSheetOneOpen) {
             ModalBottomSheet(
                 onDismissRequest = { isSheetOneOpen = !isSheetOneOpen },
                 sheetState = sheetStateOne,
 
                 ) {
-                CountryList(currentCountry = selectedCountry, onCountrySelected = {
+                CountryList( countries = countries ,currentCountry = selectedCountry, onCountrySelected = {
                     isSheetOneOpen = !isSheetOneOpen
                     selectedCountry = it
                 })
@@ -209,20 +219,15 @@ fun CompleteSignUpScreen(
 }
 
 
+
+
 @Composable
 fun CountryList(
-    currentCountry: String = "", onCountrySelected: (String) -> Unit = {}
+    countries: List<Pair<String, String>>,
+    currentCountry: String = "",
+    onCountrySelected: (String) -> Unit = {}
 ) {
     val selectedCountry = remember { mutableStateOf("") }
-    val countries = listOf(
-        Pair("Egypt", "🇪🇬"),
-        Pair("Mexico", "🇲🇽"),
-        Pair("Argentina", "🇦🇷"),
-        Pair("South Korea", "🇰🇷"),
-        Pair("Saudi Arabia", "🇸🇦"),
-        Pair("South Africa", "🇿🇦"),
-
-        )
 
     LazyColumn(
         modifier = Modifier.heightIn(max = 400.dp)
@@ -235,7 +240,6 @@ fun CountryList(
                     .clickable {
                         selectedCountry.value = country
                         onCountrySelected(country)
-
                     },
                 colors = if (currentCountry == country) CardDefaults.cardColors(RedP300.copy(alpha = 0.2f)) else CardDefaults.cardColors(
                     Color.White
@@ -253,14 +257,14 @@ fun CountryList(
                     Row(
                         verticalAlignment = Alignment.CenterVertically
                     ) {
-
-
                         Text(
-
-                            text = flag, fontSize = 24.sp, modifier = Modifier.padding(end = 16.dp)
+                            text = flag,
+                            fontSize = 24.sp,
+                            modifier = Modifier.padding(end = 16.dp)
                         )
                         Text(
-                            text = country, fontWeight = FontWeight.Medium
+                            text = country,
+                            fontWeight = FontWeight.Medium
                         )
                     }
                     if (currentCountry == country) {
@@ -269,7 +273,6 @@ fun CountryList(
                             contentDescription = null,
                             tint = RedP300,
                             modifier = Modifier.padding(start = 8.dp)
-
                         )
                     }
                 }

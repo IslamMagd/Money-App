@@ -54,7 +54,8 @@ fun MyCardsScreen(navController: NavController, modifier: Modifier = Modifier) {
                     label = "From",
                     name = savedCardholderName,
                     account = savedCardNumber,
-                    icon = painterResource(id = R.drawable.ic_bank)
+                    icon = painterResource(id = R.drawable.ic_bank),
+                    visibil = false
                 )
             }
             Spacer(modifier = Modifier.height(16.dp))

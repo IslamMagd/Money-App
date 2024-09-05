@@ -50,14 +50,16 @@ fun CombineTwoCards(modifier: Modifier = Modifier,IsTransferIcon: Boolean = true
             label = "From",
             name = "Asmaa Dosuky",
             account = "Account xxxx7890",
-            icon = painterResource(id = R.drawable.ic_bank)
+            icon = painterResource(id = R.drawable.ic_bank),
+            visibil = true
         )
 
         TransactionDetailCard(
             label = "To",
             name = "Jonathon Smith",
             account = "Account xxxx7890",
-            icon = painterResource(id = R.drawable.ic_bank)
+            icon = painterResource(id = R.drawable.ic_bank),
+            visibil = true
         )
         TransferOrSuccesIcon(IsTransferIcon)
     }
@@ -65,7 +67,7 @@ fun CombineTwoCards(modifier: Modifier = Modifier,IsTransferIcon: Boolean = true
 
 
 @Composable
-fun TransactionDetailCard(label: String, name: String, account: String, icon: Painter) {
+fun TransactionDetailCard(label: String, name: String, account: String, icon: Painter,visibil: Boolean) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -104,12 +106,13 @@ fun TransactionDetailCard(label: String, name: String, account: String, icon: Pa
 
             Spacer(modifier = Modifier.width(24.dp))
             Column {
+                if(visibil){
                 Text(
                     text = label,
                     style = MaterialTheme.typography.bodySmall.copy(color = RedP300),
                     fontWeight = FontWeight(500),
                     fontSize = 16.sp
-                )
+                )}
                 Text(
                     text = name,
                     style = MaterialTheme.typography.bodyMedium.copy(fontWeight = FontWeight.Bold),
